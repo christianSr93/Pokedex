@@ -1,0 +1,73 @@
+@import '../../styles/global.scss';
+
+
+.card{
+    display: flex;
+    justify-content: center;
+    height: 400px;
+    margin-top: 40px;
+    font-weight: 400;
+    color: #252525;
+    .container{
+        width: 50%;
+        padding: 10px;
+        border-radius: 10px;
+        @include sm {
+            width: 70%;
+        }
+        .header{
+            display: flex;
+            justify-content: space-between;
+            .order{
+                text-align: right;
+            }
+        }
+        .content{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .footer{
+            h3{
+                text-align: center;
+            }
+            .typesContainer{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .types{
+                    width: 85px;
+                    border-radius: 10px;
+                    margin-right: 5px;
+                    margin-top: 10px;
+                    padding: 2px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+            .statsContainer{
+                display: flex;
+                justify-content: center;
+                .grid{
+                    width: 100%;
+                    display: inline-grid;
+                    grid-template-columns: repeat(2, minmax(100px, 1fr));
+                    grid-gap: 10px;
+                    justify-items: center;
+                    font-size: medium;
+
+                    @include sm {
+                        display: inline-grid;
+                        grid-template-columns: none;
+                        grid-gap: 10px;
+                        justify-items: center;
+                        font-size: small;
+
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,49 @@
+:export {
+    normal: #A8A77A;
+	fire: #EE8130;
+	water: #6390F0;
+	electric: #F7D02C;
+	grass: #7AC74C;
+	ice: #96D9DC;
+	fighting: #C22E28;
+	poison: #a33ea1;
+	ground: #E2BF65;
+	flying: #A98FF3;
+	psychic: #F95587;
+	bug: #A6B91A;
+	rock: #B6A136;
+	ghost: #735797;
+	dragon: #6F35FC;
+	dark: #705746;
+	steel: #B7B7CE;
+	fairy: #D685AD;
+
+    normalOpacity: #A8A77ABF;
+	fireOpacity: #EE8130BF;
+	waterOpacity: #6390F0BF;
+	electricOpacity: #F7D02CBF;
+	grassOpacity: #7AC74CBF;
+	iceOpacity: #96D9DCBF;
+	fightingOpacity: #C22E28BF;
+	poisonOpacity: #a33ea1BF;
+	groundOpacity: #E2BF65BF;
+	flyingOpacity: #A98FF3BF;
+	psychicOpacity: #F95587BF;
+	bugOpacity: #A6B91ABF;
+	rockOpacity: #B6A136BF;
+	ghostOpacity: #735797BF;
+	dragonOpacity: #6F35FCBF;
+	darkOpacity: #705746BF;
+	steelOpacity: #B7B7CEBF;
+	fairyOpacity: #D685ADBF;
+}
+
+// Small tablets and large smartphones (landscape view)
+$screen-sm-max: 750px;
+
+// Small devices
+@mixin sm {
+  @media (max-width: #{$screen-sm-max}) {
+      @content;
+  }
+}
