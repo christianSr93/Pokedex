@@ -57,3 +57,10 @@ export interface Pokemon{
         }
     }[]
 }
+
+export interface SliceState{
+    pokemon_list: Pokemon[],
+    filteredPokemon: Pokemon[],
+    selectedPokemon: Pokemon,
+    favorites: Pokemon[],
+}
