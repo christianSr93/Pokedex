@@ -1,12 +1,9 @@
-import { AnyAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
-import { AppState, AppThunk } from '..';
-import { Pokemon } from '../../../interface/interface';
+import { AppState } from '..';
+import { Pokemon, SliceState } from '../../../interface/interface';
 
-export const PokemonSlice = createSlice({
-  name: 'pokemon',
-
-  initialState: {
+const initialState: SliceState = {
     pokemon_list: [],
     filteredPokemon: [],
     selectedPokemon: {
@@ -29,13 +26,12 @@ export const PokemonSlice = createSlice({
               url:''
           }
       }]
-    }, 
-    filters: {
-      type: "all",
-      generation: "all",
-      search: "",
-    }
-  },
+    },
+    favorites:[],
+}
+export const PokemonSlice = createSlice({
+  name: 'pokemon',
+  initialState: initialState,
 
   reducers: {
     setPokemon: (state, action) => ({
@@ -48,7 +44,13 @@ export const PokemonSlice = createSlice({
     },
     setPokemonFiltered: (state, action) => {
       state.filteredPokemon = (action.payload).sort((a:Pokemon, b:Pokemon) => a.order - b.order);
-    }
+    },
+    addFavorites: (state, action: PayloadAction<Pokemon>) => {
+      state.favorites.push(action.payload)
+    },
+    removeFavorites: (state, action) => {
+      state.favorites = (state.favorites).filter((element:Pokemon) => element.order !== action.payload.order)
+    },
   },
 
   extraReducers: {
@@ -59,15 +61,18 @@ export const PokemonSlice = createSlice({
       state.pokemon_list = action.payload.pokemon.pokemon_list;
       state.filteredPokemon = action.payload.pokemon.pokemon_list;
       state.selectedPokemon = action.payload.pokemon.selectedPokemon;
+      state.favorites = action.payload.pokemon.favorites;
+
     }
   }
 });
 
-export const { setPokemon, setPokemonSelected, setPokemonFiltered } = PokemonSlice.actions;
+export const { setPokemon, setPokemonSelected, setPokemonFiltered, addFavorites, removeFavorites } = PokemonSlice.actions;
 
 export const selectPokemon = (state: AppState) => state.pokemon.pokemon_list;
 export const filteredPokemon = (state: AppState) => state.pokemon.filteredPokemon;
 export const pokemonSelected = (state: AppState) => state.pokemon.selectedPokemon;
-export const getFilters = (state: AppState) => state.pokemon.filters;
+export const favorites = (state: AppState) => state.pokemon.favorites;
+
 
 export default PokemonSlice.reducer;
