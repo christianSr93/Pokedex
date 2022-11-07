@@ -1,45 +1,35 @@
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Pokemon } from "../../interface/interface"
-import styles from "./PokemonCard.module.scss"
 import Link from "next/link";
-import { setPokemonSelected } from '../../appState/store/slices/pokemon';
-import { useDispatch } from 'react-redux'
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import usePokemonCard from "./hooks/usePokemonCard";
+import styles from "./PokemonCard.module.scss"
 
 export const PokemonCards = (props: {pokemon: Pokemon}) => {
     const { name, sprite, id, types } = props.pokemon;
-    const [hover, setHover] = useState(false)
-    const [background, setBackground] = useState({backgroundColor: '#F2F2F2'})
-    const dispatch = useDispatch();
-
-    const toggleHover = () => {
-        setHover(!hover)
-    }
-
-    const handlePokemon = () => {
-        dispatch(setPokemonSelected(props.pokemon));
-    }
-    
-    useEffect(() => {
-        if(hover){
-            setBackground({backgroundColor: styles[types[0].type.name]})
-        }else{
-            setBackground({backgroundColor: '#F2F2F2'})
-        }
-    }, [hover])
-    
+    const  { handlePokemon, addFavorite, isFavorite, removeFavorite } = usePokemonCard(props.pokemon);
+    const favorite = isFavorite();
   return (
     <>
-        <div style={background} className={styles.card} onMouseEnter={toggleHover} onMouseLeave={toggleHover} onClick={handlePokemon}>
+        <div style={{backgroundColor: styles[`${props.pokemon.types[0].type.name}Opacity`]}} className={styles.card}>
             <div className={styles.container}>
                 <div className={ styles.header }>
-                    <div className={ styles.favorite }>
-                        <IconButton title="Add to favorite" aria-label="delete">
-                            <FavoriteBorderIcon />
-                        </IconButton>
+                    <div className={ !favorite ? styles.favorite:'' }>
+                        {
+                            favorite ? 
+                            (
+                                <IconButton title="Add to favorite" aria-label="delete" onClick={removeFavorite}>
+                                    <FavoriteIcon />
+                                </IconButton>
+                            ):(
+                                <IconButton title="Add to favorite" aria-label="delete" onClick={addFavorite}>
+                                    <FavoriteBorderIcon />
+                                </IconButton>
+                            )
+                        }
                     </div>
                     <div className={ styles.order }>
                         #00{id}
@@ -66,7 +56,7 @@ export const PokemonCards = (props: {pokemon: Pokemon}) => {
                     ))}
                     <div className={ styles.details }>
                         <Link href="/pokemon">
-                            <IconButton title="Details" aria-label="delete">
+                            <IconButton title="Details" aria-label="delete" onClick={handlePokemon}>
                                 <ArrowForwardIcon />
                             </IconButton>
                         </Link>
