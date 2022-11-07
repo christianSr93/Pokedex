@@ -6,6 +6,10 @@ import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
 
 const CustomTextField = styled(TextField)({
     '& input':{
@@ -40,6 +44,8 @@ export const Filters = () => {
         type,
         search,
         TYPES,
+        checked,
+        handleFavorite,
         handleSearch,
         handleType,
         onSearch
@@ -47,6 +53,14 @@ export const Filters = () => {
    
   return (
     <div className={styles.container}>
+        <div>
+            <Checkbox 
+                checked={checked}
+                onChange={handleFavorite}
+                icon={<FavoriteBorder style={{ color: 'white' }} />}
+                checkedIcon={<Favorite style={{ color: 'white' }} />}
+            />
+        </div>
         <CustomTextField size="small" select value={type} onChange={handleType} label="Types">
                 <MenuItem key={'0999'} value={'default'} disabled>
                     Select a type
@@ -57,6 +71,7 @@ export const Filters = () => {
                 </MenuItem>
             ))}
         </CustomTextField>
+      
         <div>
             <CustomTextField 
                 size="small" 
